@@ -21,6 +21,7 @@ const Hero = () => {
             <span></span>
             <span></span>
             <span></span>
+            <span></span>
         </div>
       <div className='max-w-7xl mt-24 mx-auto items-center flex flex-col md:flex-row gap-16 md:gap-40 justify-between'>
         <div className='md:space-y-6 px-4'>
@@ -38,7 +39,7 @@ const Hero = () => {
             initial={{opacity:0, x:-100}}
             whileInView={{opacity:1, x:0}}
             transition={{duration:1.4, delay:0.5}}
-            className='lg:w-[600px] mb-4 md:mb-0 text-sm text-gray-300'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et laboriosam iste ipsa dolores? Voluptas et quae eveniet obcaecati voluptatibus eaque dolorem fugiat labore cumque esse.</motion.p>
+            className='lg:w-[600px] mb-4 md:mb-0 text-sm text-gray-300'>With More Than One Year Of Experience In Designing And Building Responsive Web Apps.</motion.p>
             <motion.button
             initial={{opacity:0, x:-100}}
             whileInView={{opacity:1, x:0}}
