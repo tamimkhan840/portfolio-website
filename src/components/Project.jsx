@@ -3,9 +3,10 @@ import Digital from '../assets/Digital.png'
 import Nike from '../assets/Nike.png'
 import Clothify from '../assets/Clothify.png'
 import commerce from "../assets/e-commerce.png";
-import coffee from "../assets/coffee.png";
+import coffee from "../assets/coffee1.png";
 import book from "../assets/book.png";
 import task from "../assets/task.png";
+import Experienced from "../assets/Experienced.png";
 
 const Project = () => {
   const [activeTab, setActiveTab] = useState("All");
@@ -66,12 +67,21 @@ const Project = () => {
        techStack: ["Next.js", "MongoDB", "Stripe", "Tailwind CSS"],
     },
     {
-      id: 6,
+      id: 7,
       category: "Tool",
       title: "SEO Dream",
       link: "https://clothify-two.vercel.app/",
       github: 'https://github.com/rohitsingh93300/YT-Clothify',
       image: task,
+       techStack: ["Next.js", "MongoDB", "Stripe", "Tailwind CSS"],
+    },
+    {
+      id: 8,
+      category: "Tool",
+      title: "SEO Dream",
+      link: "https://clothify-two.vercel.app/",
+      github: 'https://github.com/rohitsingh93300/YT-Clothify',
+      image: Experienced,
        techStack: ["Next.js", "MongoDB", "Stripe", "Tailwind CSS"],
     },
   ];
