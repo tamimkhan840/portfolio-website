@@ -1,76 +1,135 @@
+import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaSquareXTwitter } from 'react-icons/fa6';
+import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
 
-import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
-import {FaSquareXTwitter} from 'react-icons/fa6'
 const Contact = () => {
+  const form = useRef();
+  const [loading, setLoading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+
+  const validateForm = (name, email, message) => {
+    const errors = {};
+
+    if (!name.trim()) errors.name = 'Name is required.';
+    if (!email.trim()) errors.email = 'Email is required.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = 'Invalid email address.';
+    if (!message.trim()) errors.message = 'Message cannot be empty.';
+
+    return errors;
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    const name = form.current.user_name.value;
+    const email = form.current.user_email.value;
+    const message = form.current.message.value;
+
+    const errors = validateForm(name, email, message);
+    setFormErrors(errors);
+
+    if (Object.keys(errors).length > 0) return;
+
+    setLoading(true);
+    emailjs
+      .sendForm(
+        'service_fp7o57k',
+        'template_44iilg5',
+        form.current,
+        '0Bk_iCbJN_CwcQBTu'
+      )
+      .then(
+        () => {
+          setLoading(false);
+          alert('Your message has been sent successfully!');
+          form.current.reset();
+        },
+        (error) => {
+          setLoading(false);
+          alert('Message sending failed. Please try again.');
+          console.error('FAILED...', error);
+        }
+      );
+  };
+
   return (
-    <section id='contact' className='bg-gray-950 py-16 px-6'>
-      <div className='max-w-7xl mx-auto'>
-        <h2 className='text-5xl font-bold text-center text-gray-300 mb-12'>Contact Me</h2>
-        <div className='grid lg:grid-cols-2 gap-10'>
-            {/* contact info */}
-            <div className='flex flex-col justify-center space-y-8'>
-                <div>
-                    <h1 className='text-4xl lg:text-6xl font-bold text-gray-300'>Let&apos;s Talk</h1>
-                    <p className='text-gray-300 my-5'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus, ab. Iusto beatae doloribus ut sunt voluptatem fuga mollitia dicta illum!</p>
-                    <h3 className='text-2xl font-semibold text-gray-300'>Email</h3>
-                    <p className='text-gray-600 mt-2'>
-                        <a href="mailto:hmdtamimkhan@gmail.com"  className='text-blue-500 hover:underline'>hmdtamimkhan@gmail.com</a>
-                    </p>
+    <section id='contact' className='bg-gradient-to-r from-gray-900 to-gray-950 py-16 px-8'>
+      <div className='max-w-6xl mx-auto'>
+        <h2 className='text-4xl font-bold text-center text-gray-200 mb-10'>Contact Me</h2>
+        <div className='flex flex-col lg:flex-row gap-12'>
+          {/* Contact Info */}
+          <div className='w-full lg:w-1/2'>
+            <h3 className='text-3xl font-bold text-gray-200 mb-4'>Let&apos;s Connect</h3>
+            <p className='text-gray-400 mb-8'>I am always open to discussing new projects or creative ideas. Feel free to reach out!</p>
+            <div className='space-y-6'>
+              <div>
+                <h4 className='text-xl font-semibold text-gray-200'>Email</h4>
+                <p className='text-blue-400 hover:underline'><a href='mailto:hmdtamimkhan@gmail.com'>hmdtamimkhan@gmail.com</a></p>
+              </div>
+              <div>
+                <h4 className='text-xl font-semibold text-gray-200'>Phone</h4>
+                <p className='text-blue-400 hover:underline'><a href='tel:+8801919106682'>+8801919106682</a></p>
+              </div>
+              <div>
+                <h4 className='text-xl font-semibold text-gray-200'>Follow Me</h4>
+                <div className='flex space-x-4 mt-4'>
+                  <FaFacebook className='text-blue-600 hover:text-white cursor-pointer' size={24} />
+                  <FaInstagram className='text-pink-600 hover:text-white cursor-pointer' size={24} />
+                  <FaLinkedin className='text-blue-400 hover:text-white cursor-pointer' size={24} />
+                  <FaSquareXTwitter className='text-blue-500 hover:text-white cursor-pointer' size={24} />
                 </div>
-                <div>
-                    <h3 className='text-2xl font-semibold text-gray-300'>Phone</h3>
-                    <p className='text-gray-600 mt-2'>
-                        <a href="tel:+8801919106682" className='text-blue-500 hover:underline'>+8801919106682</a> <br />
-                        <a href="tel:+8801898341084" className='text-blue-500 hover:underline'>+8801898341084</a>
-                    </p>
-                </div>
-                <div>
-                    <h3 className='text-2xl font-semibold text-gray-300'>Follow Me</h3>
-                    <div className='flex gap-3 text-2xl transition-all mt-5'>
-                        <FaFacebook className='text-blue-400' />
-                        <FaInstagram className='text-blue-400' />
-                        <FaLinkedin className='text-blue-400' />
-                        <FaSquareXTwitter className='text-blue-400' />
-                    </div>
-                </div>
+              </div>
             </div>
-            {/* contact form */}
-            <div className='bg-gray-900 rounded-lg shadow-[0px_0px_20px_10px_rgba(0,0,0,0.3)] shadow-blue-500 p-8'>
-                <h3 className='text-3xl font-semibold text-gray-300 mb-6'>Get in Touch</h3>
-                <form action="" className='space-y-6'>
-                    <div>
-                        <label htmlFor="name" className='block text-sm font-medium text-gray-300'>Name</label>
-                        <input
-                        type="email"
-                        id='email'
-                        className='mt-1 w-full p-3 border bg-gray-950 text-gray-300 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
-                        placeholder='Your Email'
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className='block text-sm font-medium text-gray-300'>email</label>
-                        <input
-                        type="text"
-                        id='name'
-                        className='mt-1 w-full p-3 border bg-gray-950 text-gray-300 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
-                        placeholder='Your Name'
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="message" className='block text-sm font-medium text-gray-300'>Message</label>
-                        <textarea
-                        id="messsage"
-                        rows={5}
-                        className='mt-1 w-full p-3 border bg-gray-950 text-gray-300 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500'
-                        placeholder='Your Message'></textarea>
-                    </div>
-                    <button type='submit' className='w-full bg-blue-500 text-white py-3 rounded-lg shadow-md hover:bg-blue-600 transition-colors'>Send Message</button>
-                </form>
-            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className='w-full lg:w-1/2 bg-gray-900 rounded-xl p-8 shadow-lg'>
+            <h3 className='text-2xl font-bold text-gray-200 mb-6'>Get in Touch</h3>
+            <form ref={form} onSubmit={sendEmail} className='space-y-6'>
+              <div>
+                <label htmlFor='name' className='block text-sm text-gray-300'>Name</label>
+                <input
+                  type='text'
+                  name='user_name'
+                  className='w-full mt-2 p-3 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500'
+                  placeholder='Enter your name'
+                />
+                {formErrors.name && <p className='text-red-500 text-sm mt-1'>{formErrors.name}</p>}
+              </div>
+              <div>
+                <label htmlFor='email' className='block text-sm text-gray-300'>Email</label>
+                <input
+                  type='email'
+                  name='user_email'
+                  className='w-full mt-2 p-3 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500'
+                  placeholder='Enter your email'
+                />
+                {formErrors.email && <p className='text-red-500 text-sm mt-1'>{formErrors.email}</p>}
+              </div>
+              <div>
+                <label htmlFor='message' className='block text-sm text-gray-300'>Message</label>
+                <textarea
+                  name='message'
+                  rows={5}
+                  className='w-full mt-2 p-3 bg-gray-800 text-gray-300 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500'
+                  placeholder='Type your message...'
+                ></textarea>
+                {formErrors.message && <p className='text-red-500 text-sm mt-1'>{formErrors.message}</p>}
+              </div>
+              <button
+                type='submit'
+                className='w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 disabled:opacity-50'
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Send Message'}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
