@@ -8,8 +8,8 @@ import "../Css/Hero.css"
 const Hero = () => {
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/profile.png';
-    link.download = 'profile.png';
+    link.href = '/Tamim-khan CV.pdf';
+    link.download = 'Tamim-khan CV.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
